@@ -13,10 +13,12 @@ description: 将即梦等工具交付的纯色背景视频在本地转成透明 
 
 ## 1. 自动准备环境
 
+主要部署目标为 Windows x64（员工电脑），推荐 Python 3.12；macOS/Linux 是辅助开发/测试路径。Windows ARM64/32 位不在当前自动安装支持范围。员工只负责提供文件和审核，不要求员工理解或运行命令。
+
 先读 [环境与执行参考](references/usage.md)。检查受管运行环境是否可用；缺失时由 Codex 执行安装脚本，不能只把命令交给不熟悉终端的用户。
 
 - Windows：运行 `scripts/setup-windows.ps1`，检测 Python，缺失时通过 winget 用户范围安装，再建立独立 venv。
-- macOS/Linux：用可用 Python 3.9+ 执行 `scripts/setup.py`。没有 Python 时按系统提供的包管理方式处理，不假定系统带 Python。
+- macOS/Linux：用可用 Python 3.9–3.12 执行 `scripts/setup.py`。没有 Python 时按系统提供的包管理方式处理，不假定系统带 Python。
 - 依赖通过 PyPI 的固定版本 wheel 安装；imageio-ffmpeg 包提供 FFmpeg，优先复用 PATH 中已有 FFmpeg。不需要 ffprobe，视频帧率由 OpenCV 读取。
 - 使用安装脚本返回的 Python 完整路径，不修改全局 PATH、永久执行策略或管理员配置。系统授权/组织限制无法绕过时说明具体阻碍。
 - Windows 安装脚本尚未在真实 Windows 验证，不能声称全平台测试通过。依赖不支持当前架构时停止并报告，不静默改成源码编译。
