@@ -10,8 +10,8 @@ import venv
 p = argparse.ArgumentParser()
 p.add_argument('--root', type=Path, default=Path(os.environ.get('LOCALAPPDATA', Path.home() / '.local/share')) / 'game-video-to-png' / 'runtime-v1')
 a = p.parse_args()
-if sys.version_info < (3, 9):
-    raise SystemExit('Python 3.9+ required (3.12 recommended).')
+if not (3, 9) <= sys.version_info[:2] <= (3, 12):
+    raise SystemExit('Python 3.9–3.12 required for pinned wheels (3.12 recommended).')
 python = a.root / ('Scripts/python.exe' if os.name == 'nt' else 'bin/python')
 if not python.exists():
     venv.EnvBuilder(with_pip=True).create(a.root)
