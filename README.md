@@ -2,7 +2,7 @@
 
 一套可直接随 GitHub 仓库共享给朋友使用的 Codex Skills。
 
-仓库中包含两个连续工作的 Skill：
+仓库中包含三个连续工作的 Skill：
 
 1. `game-design-decision`
    - 竞品 / 参考对象识别
@@ -21,7 +21,13 @@
    - 即梦 Seedance Production Sheet
    - 可直接复制的 Seedance Prompt
 
-> Unity 代码实现不在这两个 Skill 的职责范围内。
+3. `game-video-to-png`（新增测试版）
+   - 自动准备本地 FFmpeg / Python 独立运行环境，提供 Windows 安装脚本
+   - 自动检测未知纯色背景，批量导出透明 PNG
+   - 原始帧 / 透明帧对照预览，人工标记问题帧
+   - Codex 调用本地脚本修正指定帧，新版本保留旧结果
+
+> Unity 代码实现不在这些 Skill 的职责范围内。
 
 ---
 
@@ -39,6 +45,10 @@ ai-game-production-skills/
 │       │       ├── game-spec-schema.md
 │       │       └── example-input.md
 │       │
+│       ├── game-video-to-png/
+│       │   ├── SKILL.md
+│       │   ├── scripts/
+│       │   └── references/
 │       └── game-animation-seedance/
 │           ├── SKILL.md
 │           └── references/
@@ -56,7 +66,7 @@ ai-game-production-skills/
 
 1. 打开本仓库 GitHub 页面。
 2. 点击 `Code → Download ZIP`。
-3. 在 macOS 双击 ZIP 解压。
+3. 在 Windows 或 macOS 解压 ZIP。
 4. 打开 Codex App。
 5. 用 Codex 打开刚解压的整个仓库文件夹。
 6. 在 Codex 中输入：
@@ -131,6 +141,28 @@ ANIMATION HANDOFF
 
 ---
 
+## 第三步：视频转透明 PNG 序列（测试版）
+
+把即梦交付的 MP4 提供给 Codex，输入：
+
+```text
+使用 $game-video-to-png。
+把这个视频转成透明 PNG 序列。主体与纯色背景颜色不同，背景色请自动检测。
+请自动准备所需环境，处理后给我审核预览和 ZIP。
+```
+
+无需手动学习终端：Codex 运行 skill 内的环境安装和处理脚本。首次需要联网下载依赖，可能出现系统授权；不安装大型 AI 模型，不上传视频。Windows 缺少 Python 时优先通过 winget 用户范围安装，不修改全局 PATH。
+
+审核后继续：
+
+```text
+第 35-42 帧衣服有缺失，第 78 帧有残色。请结合原始帧修复，保留旧版本，再给我预览。
+```
+
+[新 skill](.agents/skills/game-video-to-png/SKILL.md) · [环境与命令参考](.agents/skills/game-video-to-png/references/usage.md)
+
+**测试范围：** macOS 上的绿底/紫底合成 MP4 集成测试通过；真实即梦素材和 Windows 实机安装仍需用户测试。自动检查不等于视觉验收。本版是色键 + 本地图像脚本，不包含 SAM 或生成模型修图。
+
 # Demo 演示链
 
 ```text
@@ -163,6 +195,10 @@ Seedance Production Sheet
 即梦 Prompt
         ↓
 即梦生成动画
+        ↓
+$game-video-to-png
+        ↓
+本地批量抠像 → 人工审核 → 指定帧修复 → 透明 PNG 序列
 ```
 
 # 当前工作流边界
@@ -170,7 +206,7 @@ Seedance Production Sheet
 本仓库负责：
 
 ```text
-设计决策 → 游戏策划 → GameSpec → 动画需求 → Seedance Prompt → 动画生产包
+设计决策 → 游戏策划 → GameSpec → 动画需求 → Seedance Prompt → 动画生产包 → 本地透明 PNG 序列与审核修复
 ```
 
 暂不负责 Unity 程序实现、C# 游戏逻辑、正式联网系统、服务器、动画状态机接入和最终上线发布。
