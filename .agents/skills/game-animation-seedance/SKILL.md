@@ -1,10 +1,11 @@
 ---
-name: animation-production-seedance
+name: game-animation-seedance
 description: >
   Convert a frozen game design / GameSpec into an animation production package for Jimeng Seedance.
   Supports projects with zero existing image assets by bootstrapping reference assets first.
   Excludes Unity code generation and gameplay programming.
-version: 3.0
+metadata:
+  version: "3.0"
 ---
 
 # Animation Production → Seedance Skill
