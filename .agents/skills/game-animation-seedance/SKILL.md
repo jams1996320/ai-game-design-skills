@@ -557,3 +557,7 @@ Never end with a vague instruction such as:
 10. Immutable violence / weapon / injury restrictions must propagate into every prompt and QA check.
 11. Unity code generation is excluded.
 12. Do not claim a Seedance mode exists if uncertain; use `VERIFY_IN_CURRENT_JIMENG_UI`.
+
+## Downstream: transparent PNG sequence
+
+For approved solid-background MP4 game sprites, hand off to `game-video-to-png`. Carry animation ID, source clip, intended actors/props, FPS if specified, loop flag, duration and naming constraints. The user ensures foreground colors differ from the background; the downstream skill detects the unknown background color. It prepares local tools, keys the video, presents human review, and repairs flagged frames from original pixels. Video approval does not imply PNG approval. Do not trigger post-processing until an actual source video is available.
